@@ -1,45 +1,225 @@
-<!-- Liquid Glass URL + File Scanner (Horizontal Layout) -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Sentinel-Scanner ⛊</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="STYLE.css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CyberSentinel🐦‍🔥</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Arial', sans-serif;
+      overflow-x: hidden;
+      background: #000;
+      color: #fff;
+    }
+
+    /* Background GIF & overlay */
+    .bg-gif {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: url('https://cbswire.dk/wp-content/uploads/2021/05/cybercyber.gif') center/cover no-repeat;
+      z-index: -2;
+      filter: brightness(0.5);
+    }
+    .overlay {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.5);
+      z-index: -1;
+    }
+
+    /* Navbar - liquid glass effect */
+    .site-nav {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      padding: 1rem;
+      backdrop-filter: blur(15px);
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,0,0.2);
+      border-radius: 15px;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+    .site-nav .nav-link {
+      color: #fff;
+      text-decoration: none;
+      font-weight: 500;
+      position: relative;
+      transition: 0.3s ease;
+    }
+    .site-nav .nav-link::after {
+      content: '';
+      position: absolute;
+      width: 0%;
+      height: 2px;
+      bottom: -4px;
+      left: 0;
+      background: linear-gradient(90deg, #ffff00, #00ff00);
+      transition: width 0.3s ease;
+    }
+    .site-nav .nav-link:hover::after {
+      width: 100%;
+    }
+
+    /* Section headers */
+    h1, h2, h3 {
+      background: linear-gradient(90deg, #ffff00, #00ff00);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: gradientAnim 3s infinite alternate;
+    }
+    @keyframes gradientAnim {
+      0% { background-position: 0% 50%; }
+      100% { background-position: 100% 50%; }
+    }
+
+    /* Scanner containers */
+    .form-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      justify-content: center;
+      align-items: center;
+      margin: 1rem 0;
+      background: rgba(255,255,255,0.05);
+      backdrop-filter: blur(15px);
+      padding: 1rem;
+      border-radius: 20px;
+      border: 1px solid rgba(255,255,0,0.2);
+    }
+    .form-row input[type="text"], .form-row input[type="file"] {
+      width: 70%;
+      padding: 0.7rem;
+      border-radius: 10px;
+      border: none;
+    }
+    .form-row button {
+      padding: 0.7rem 1rem;
+      border-radius: 10px;
+      border: none;
+      cursor: pointer;
+      font-weight: bold;
+      background: linear-gradient(90deg, #ffff00, #00ff00);
+      color: #000;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .form-row button:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 10px #ffff00, 0 0 20px #00ff00;
+    }
+
+    .note {
+      color: #ff5555;
+      font-size: 0.9rem;
+      text-align: center;
+      margin-top: 0.5rem;
+    }
+
+    /* About Section */
+    .about-section {
+      text-align: center;
+      padding: 4rem 2rem;
+      max-width: 800px;
+      margin: 2rem auto;
+      background: rgba(255,255,255,0.05);
+      border-radius: 20px;
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255,255,0,0.2);
+    }
+  </style>
 </head>
 <body>
+  <div class="bg-gif"></div>
+  <div class="overlay"></div>
 
-<div class="scanner-wrapper">
+  <!-- Navbar -->
+  <nav class="site-nav">
+    <a class="nav-link" href="#home">🏠 Home</a>
+    <a class="nav-link" href="#url-scan">🌐 URL Scan</a>
+    <a class="nav-link" href="#file-scan">📁 File Scan</a>
+    <a class="nav-link" href="#about">ℹ️ About</a>
+  </nav>
 
-  <!-- URL SCANNER BOX -->
-  <div class="scanner-box">
-    <h2>URL Scanner</h2>
-    <div class="file-input">
-      <input type="text" id="urlField" placeholder="Enter URL to scan" />
+  <!-- Intro -->
+  <section id="home" style="text-align:center; padding:4rem 1rem;">
+    <h1>Welcome to ScanSafe 🔒</h1>
+    <p>Your ultimate solution to keep URLs and files safe from malware, unsafe content, and adult sites.</p>
+  </section>
+
+  <!-- URL Scanner -->
+  <section id="url-scan">
+    <h2>🌐 URL Scanner</h2>
+    <div class="form-row">
+      <input id="urlInput" type="text" placeholder="https://example.com/suspicious">
       <button onclick="scanURL()">Scan URL</button>
+      <div class="note" id="urlNote"></div>
     </div>
-    <div id="url-status"></div>
-  </div>
+  </section>
 
-  <!-- FILE SCANNER BOX -->
-  <div class="scanner-box">
-    <h2>File Scanner</h2>
-    <div class="file-input">
-      <input type="file" id="fileField" />
+  <!-- File Scanner -->
+  <section id="file-scan">
+    <h2>📁 File Scanner</h2>
+    <div class="form-row">
+      <input id="fileInput" type="file">
       <button onclick="scanFile()">Scan File</button>
+      <div class="note" id="fileNote"></div>
     </div>
-    <div id="file-status"></div>
-  </div>
+    <div class="note">Blocked file types (demo): exe, bat, js, vbs, cmd</div>
+  </section>
 
-</div>
+  <!-- About Section -->
+  <section class="about-section" id="about">
+    <h2>ℹ️ About ScanSafe</h2>
+    <p>ScanSafe protects users from unsafe URLs, suspicious files, and adult content. 🚀 Keep your browsing and downloads secure with easy scanning.</p>
+  </section>
 
-<script src="scripts.js"></script>
+  <!-- JS -->
+  <script>
+    const urlInput = document.getElementById('urlInput');
+    const urlNote = document.getElementById('urlNote');
+    const fileInput = document.getElementById('fileInput');
+    const fileNote = document.getElementById('fileNote');
+
+    const blockedKeywords = ['porn','malware','hack','phish'];
+    const blockedExtensions = ['exe','bat','js','vbs','cmd'];
+
+    function scanURL() {
+      const url = urlInput.value.trim().toLowerCase();
+      if(!url){
+        urlNote.textContent = 'Please enter a URL!';
+        return;
+      }
+      if(!url.startsWith('https://')){
+        urlNote.textContent = 'This URL is blocked: Not secure (no HTTPS)!';
+        return;
+      }
+      const blocked = blockedKeywords.some(k=>url.includes(k));
+      if(blocked){
+        urlNote.textContent='This URL is blocked due to unsafe content!';
+        return;
+      }
+      urlNote.textContent='';
+      alert(`Scanning URL: ${url} (demo scan)`);
+    }
+
+    function scanFile(){
+      if(fileInput.files.length===0){
+        fileNote.textContent='Please select a file!';
+        return;
+      }
+      const fileName = fileInput.files[0].name;
+      const extension = fileName.split('.').pop().toLowerCase();
+      if(blockedExtensions.includes(extension)){
+        fileNote.textContent='This file type is blocked as unsafe!';
+        return;
+      }
+      fileNote.textContent='';
+      alert(`Scanning file: ${fileName} (demo scan)`);
+    }
+  </script>
 </body>
 </html>
-
-
-
-
-
-
